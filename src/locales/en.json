@@ -1,11 +1,11 @@
 {
-  "paymentUi": {"demo":"Simulated payment", "notice":"No money is charged and no banking details are requested.", "showQr":"Show QR", "qrAlt":"Demo QR, not valid for payments", "notPayment":"Fictional QR · Do not transfer money", "confirm":"Confirm payment", "continue":"Continue to simulated payment", "individual":"Individual report payment", "platePayment":"One query for plate {plate}. Each new individual report requires its own simulated payment confirmation.", "subscription":"Fleet subscription", "plan":"Query plan", "weekly":"Weekly", "monthly":"Monthly", "planPayment":"{plan} plan: periodic queries for your fleet vehicles. Demo confirmation, no real charges.", "activated":"Simulated payment confirmed. Plan activated."},
-  "planUi": {"demo":"Demo limits per account: 50 vehicles, 100 reports and 25 active monitors."},
+  "paymentUi": {"annual":"Annual", "taypiDemo":"Taypi · Simulation", "notice":"No money is charged and no banking details are requested.", "showQr":"Show QR", "qrAlt":"Demo QR, not valid for payments", "confirm":"Confirm payment", "continue":"Continue to payment", "individual":"Individual report payment", "platePayment":"One query for plate {plate}. Each report is requested separately.", "subscription":"Fleet subscription", "plan":"Query plan", "weekly":"Weekly", "monthly":"Monthly", "planPayment":"{plan} plan for your fleet vehicles.", "activated":"Plan activated."},
+  "planUi": {"audience":"Customer type","personal":"Individual","business":"Business","choose":"Choose plan","usage":"Account usage","period":{"weekly":"per week","monthly":"per month","annual":"per year"},"summary":"{audience} · {plan} plan · {price}"},
   "monitoringUi": {"pause":"Pause"},
   "importUi": {"button":"Import CSV", "summary":"Accepted: {accepted}. Rejected: {rejected}."},
   "comparisonUi": {"unchanged":"No changes"},
-  "profile": {"title":"My profile", "details":"Account details", "current":"Current password", "newPassword":"New password (optional, at least 8 characters)", "security":"Security", "passwordNotice":"Changing your password signs out all sessions for this account.", "delete":"Delete account", "deleteNotice":"Deletes your account and all vehicles, reports, fleets and evidence. Enter your current password to continue.", "confirm":"This action cannot be undone. Your account and all its data will be deleted. Confirm deletion?", "denied":"Check your current password. The demo account has restrictions.", "adminNotice":"The username etepepe is reserved. The demo administrator cannot be deleted."},
-  "workspaceUi": {"vehicles":"Vehicles", "download":"Download PDF", "sources":"Sources checked", "demo":"Demonstration report · Fictional data", "sourceVehicle":"Vehicle Registry", "sourceSoat":"SOAT", "sourceAccidents":"SBS Accidents", "quick":"Quick actions", "published":"Published", "publish":"Publish report", "reject":"Request correction", "compare":"Compare versions", "noVersion":"No previous version is available for comparison."},
+  "profile": {"title":"My profile", "details":"Account details", "current":"Current password", "newPassword":"New password (optional, at least 8 characters)", "security":"Security", "passwordNotice":"Changing your password signs out all sessions for this account.", "delete":"Delete account", "deleteNotice":"Deletes your account and all vehicles, reports, fleets and evidence. Enter your current password to continue.", "confirm":"This action cannot be undone. Your account and all its data will be deleted. Confirm deletion?", "denied":"Check your current password. Check your account permissions.", "adminNotice":"The username etepepe is reserved. The demo administrator cannot be deleted."},
+  "workspaceUi": {"vehicles":"Vehicles", "download":"Download PDF", "sources":"Sources checked", "sourceVehicle":"Vehicle Registry", "sourceSoat":"SOAT", "sourceAccidents":"SBS Accidents", "quick":"Quick actions", "published":"Published", "publish":"Publish report", "reject":"Request correction", "compare":"Compare versions", "noVersion":"No previous version is available for comparison."},
   "auth": {
     "signIn": "Sign in",
     "signUp": "Create account",
@@ -13,8 +13,7 @@
     "username": "Username",
     "password": "Password",
     "invalid": "Invalid username or password.",
-    "duplicate": "Username already registered.",
-    "testOnly": "Use fictional credentials only in this test environment."
+    "duplicate": "Username already registered."
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -41,7 +40,6 @@
     "saved": "Changes saved",
     "error": "Unable to save. Check your connection and try again.",
     "required": "Complete the required fields.",
-    "simulated": "Test environment · Simulated data",
     "language": "Language",
     "menu": "Open navigation"
   },
@@ -59,6 +57,8 @@
     "resolved": "Resolved"
   },
   "dashboard": {
+    "recentReports": "Recent reports",
+    "reportHistory": "View history",
     "title": "Control panel",
     "subtitle": "Fleet status and observation tracking",
     "total": "Total vehicles",
@@ -140,7 +140,6 @@
     "active": "Active",
     "completed": "Completed",
     "failed": "Failed",
-    "paymentNotice": "Simulated payment validation. No money is processed and Taypi is not integrated.",
     "paySuccess": "Simulate valid payment",
     "payFailure": "Simulate failed payment",
     "subscriptionRequired": "An active subscription is required for this service.",
@@ -151,7 +150,7 @@
     "alreadyAssigned": "Vehicle already has a fleet assignment.",
     "alreadyMonitored": "Vehicle already has active monitoring.",
     "checkNow": "Check now",
-    "monitoringNotice": "Local data checks while this view stays open. No server worker or official source queries.",
+    "monitoringNotice": "Checks run while this view stays open.",
     "interval": "Interval (minutes)",
     "activate": "Activate monitoring",
     "lastCheck": "Last check",

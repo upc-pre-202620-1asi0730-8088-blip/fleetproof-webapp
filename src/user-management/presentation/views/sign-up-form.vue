@@ -13,5 +13,5 @@ async function signUp() { if (await store.signUp(new SignUpCommand({ username: f
   <label for="new-password">{{ t('auth.password') }}<pv-input-text id="new-password" v-model="form.password" required minlength="8" type="password" autocomplete="new-password" /></label>
   <pv-message v-if="store.error" severity="error">{{ t(store.error) }}</pv-message>
   <pv-button :label="t('auth.signUp')" type="submit" icon="pi pi-user-plus" :loading="store.loading" />
-</form><p><router-link to="/login">{{ t('auth.signIn') }}</router-link></p><p class="secondary">{{ t('auth.testOnly') }}</p></section></template>
+</form><p class="auth-alternate"><router-link to="/login">{{ t('auth.signIn') }}</router-link></p></section></template>
 

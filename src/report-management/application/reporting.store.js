@@ -16,7 +16,7 @@ export const useReportingStore = defineStore('reporting', () => {
     finally { loading.value = false; }
   }
   async function requestReport(vehicle) {
-    const report = new Report({ vehicleId: vehicle.id, plate: vehicle.plate, requestedAt: new Date().toISOString(), findings: demoFindings(vehicle.plate) });
+    const report = new Report({ vehicleId: vehicle.id, plate: vehicle.plate, status: 'published', requestedAt: new Date().toISOString(), findings: demoFindings(vehicle.plate) });
     const saved = ReportAssembler.toEntityFromResource((await api.createReport(ReportAssembler.toResourceFromEntity(report))).data);
     reports.value = [...reports.value, saved];
     return saved;
