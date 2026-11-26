@@ -11,7 +11,7 @@ export async function createReportPdf(report) {
   doc.setFontSize(10); doc.setFont('helvetica', 'normal');
   doc.text(`Reporte: ${report.id} | Fecha: ${report.requestedAt?.slice(0, 10) || '-'}`, 18, 74);
   doc.setFillColor('#E8F2FF'); doc.rect(18, 83, 174, 17, 'F');
-  doc.setTextColor('#435B78'); doc.text('DEMOSTRACION: datos ficticios. No acredita una consulta oficial.', 23, 93);
+  doc.setTextColor('#435B78'); doc.text('Documento de muestra. No valido como constancia oficial.', 23, 93);
   let y = 114;
   for (const finding of findingsForReport(report)) {
     if (y > 240) { doc.addPage(); y = 24; }

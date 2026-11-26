@@ -13,7 +13,7 @@ const router = createRouter({
     { path: '/app/fleets', redirect: '/app/vehicles?tab=fleets' },
     { path: '/app/profile', component: () => import('./user-management/presentation/views/profile.vue'), meta: { title: 'Perfil' } },
     { path: '/app/subscriptions', component: () => import('./subscription-management/presentation/views/subscription-list.vue'), meta: { title: 'Suscripciones' } },
-    { path: '/app/monitoring', component: () => import('./vehicle-monitoring/presentation/views/monitoring-list.vue'), meta: { title: 'Monitoreo' } },
+    { path: '/app/monitoring', redirect: '/app/vehicles?tab=monitoring' },
     { path: '/app/alerts', component: () => import('./vehicle-monitoring/presentation/views/monitoring-list.vue'), meta: { title: 'Alertas' } },
     { path: '/:pathMatch(.*)*', name: 'not-found', component: () => import('./shared/presentation/views/page-not-found.vue'), meta: { title: '404', public: true } }
   ]

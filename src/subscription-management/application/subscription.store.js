@@ -25,9 +25,9 @@ export const useSubscriptionStore = defineStore('subscriptions', () => {
         if (!current || current.status === 'active') return;
         await save(new Subscription({...Assembler.toResourceFromEntity(current), paymentStatus: success ? 'completed' : 'failed', status: success ? 'active' : 'pending'}));
     }
-    async function confirmPlanPayment(plan) {
+    async function confirmPlanPayment(plan, audience) {
         const current = subscriptions.value.find(item => item.service === 'fleet' && item.status !== 'cancelled');
-        return save(new Subscription({id:current?.id, service:'fleet', plan, status:'active', paymentStatus:'completed'}));
+        return save(new Subscription({id:current?.id, service:'fleet', plan, audience, status:'active', paymentStatus:'completed'}));
     }
     return {subscriptions, error, fetchSubscriptions, isActive, request, simulatePayment, confirmPlanPayment};
 });

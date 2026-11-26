@@ -13,7 +13,7 @@ import pinia from './pinia.js';
 import i18n from './i18n.js';
 
 const FleetProof = definePreset(Material, {
-  semantic: { primary: { 50: '#E8F2FF', 100: '#E8F2FF', 200: '#E8F2FF', 300: '#0B6FE8', 400: '#0B6FE8', 500: '#0B6FE8', 600: '#0B6FE8', 700: '#08254A', 800: '#08254A', 900: '#0B2447', 950: '#0B2447' } }
+  semantic: { primary: { 50: '#EFF8F9', 100: '#E5F3F4', 200: '#B7DFE3', 300: '#81C6CE', 400: '#42A4AF', 500: '#087F8C', 600: '#08717D', 700: '#085D67', 800: '#094B53', 900: '#103C42', 950: '#09282D' } }
 });
 const app = createApp(App).use(pinia).use(i18n).use(router)
   .use(PrimeVue, { theme: { preset: FleetProof, options: { darkModeSelector: false } }, ripple: true, license: import.meta.env.VITE_PRIME_UI_LICENSE_KEY })

@@ -1,9 +1,10 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useToast } from 'primevue/usetoast';
 import { useRouter, useRoute } from 'vue-router';
 import FleetList from '../../../fleet-management/presentation/views/fleet-list.vue';
+import MonitoringList from '../../../vehicle-monitoring/presentation/views/monitoring-list.vue';
 import Papa from 'papaparse';
 import { useVehicleStore } from '../../application/vehicle.store.js';
 import { useReportingStore } from '../../../report-management/application/reporting.store.js';
@@ -16,7 +17,10 @@ const toast = useToast(); const router = useRouter();
 const store = useVehicleStore(); const reporting = useReportingStore();
 const monitoring = useMonitoringStore();
 const route = useRoute();
-const tab = ref(route.query.tab === 'fleets' ? 'fleets' : 'vehicles');
+const tab = ref('vehicles');
+watch(() => route.query.tab, value => {
+  tab.value = ['fleets', 'monitoring'].includes(value) ? value : 'vehicles';
+}, { immediate: true });
 const importInput = ref(), importResult = ref(null);
 const typeFilter = ref(null);
 const types = computed(() => [...new Set(store.vehicles.map(v => v.type))]);
@@ -30,10 +34,11 @@ async function importCsv(event) {
   saving.value = true; importResult.value = {accepted: 0, rejected: []};
   try {
     const parsed = Papa.parse(await file.text(), {header:true, skipEmptyLines:true, transformHeader: key => key.trim().toLowerCase()});
-    if (parsed.errors.length) throw new Error('Invalid CSV');
+    if (parsed.errors.some(error => error.type !== 'FieldMismatch')) throw new Error('Invalid CSV');
+    const malformed = new Set(parsed.errors.map(error => error.row));
     for (const [index, row] of parsed.data.entries()) {
       try {
-        if (!['plate','type','site','owner'].every(key => typeof row[key] === 'string' && row[key].trim())) throw new Error('common.required');
+        if (malformed.has(index) || !['plate','type','site','owner'].every(key => typeof row[key] === 'string' && row[key].trim())) throw new Error('common.required');
         await store.saveVehicle(new Vehicle({...row, plate:row.plate.trim().toUpperCase(), risk:['high','medium','low'].includes(row.risk) ? row.risk : 'low'}));
         importResult.value.accepted++;
       } catch (error) { importResult.value.rejected.push(`${index + 2}: ${t(error.message.startsWith('errors.') || error.message === 'common.required' ? error.message : 'common.error')}`); }
@@ -60,8 +65,9 @@ onMounted(() => { store.fetchVehicles(); monitoring.fetchMonitoring(); });
 </script>
 <template>
   <div class="page-heading"><h1>{{ t('nav.vehicles') }}</h1><div v-if="tab === 'vehicles'" class="heading-actions"><input ref="importInput" type="file" accept=".csv,text/csv" hidden @change="importCsv" /><pv-button icon="pi pi-upload" :label="t('importUi.button')" outlined :disabled="saving || store.loading" @click="importInput.click()" /><pv-button icon="pi pi-plus" :label="t('vehicle.add')" :disabled="saving" @click="open()" /></div></div>
-  <div class="view-tabs" role="tablist" :aria-label="t('nav.vehicles')"><button role="tab" :aria-selected="tab === 'vehicles'" @click="tab = 'vehicles'"><i class="pi pi-car"></i>{{ t('workspaceUi.vehicles') }}</button><button role="tab" :aria-selected="tab === 'fleets'" @click="tab = 'fleets'"><i class="pi pi-truck"></i>{{ t('contexts.fleets') }}</button></div>
+  <div class="view-tabs" role="tablist" :aria-label="t('nav.vehicles')"><button role="tab" :aria-selected="tab === 'vehicles'" @click="tab = 'vehicles'"><i class="pi pi-car"></i>{{ t('workspaceUi.vehicles') }}</button><button role="tab" :aria-selected="tab === 'fleets'" @click="tab = 'fleets'"><i class="pi pi-truck"></i>{{ t('contexts.fleets') }}</button><button role="tab" :aria-selected="tab === 'monitoring'" @click="tab = 'monitoring'"><i class="pi pi-eye"></i>{{ t('nav.monitoring') }}</button></div>
   <FleetList v-if="tab === 'fleets'" />
+  <MonitoringList v-else-if="tab === 'monitoring'" />
   <template v-else>
   <div class="filters"><pv-input-text v-model="search" :placeholder="t('vehicle.search')" :aria-label="t('vehicle.search')" /><pv-select v-model="typeFilter" :options="types" show-clear :placeholder="t('vehicle.type')" :aria-label="t('vehicle.type')" /><pv-select v-model="risk" :options="risks" option-label="label" option-value="value" show-clear :placeholder="t('vehicle.risk')" :aria-label="t('vehicle.risk')" /><pv-select v-model="site" :options="sites" show-clear :placeholder="t('vehicle.site')" :aria-label="t('vehicle.site')" /></div>
   <pv-message v-if="importResult" :severity="importResult.rejected.length ? 'warn' : 'success'">{{ t('importUi.summary', {accepted:importResult.accepted, rejected:importResult.rejected.length}) }}<ul v-if="importResult.rejected.length"><li v-for="(line,index) in importResult.rejected" :key="index">{{ line }}</li></ul></pv-message>

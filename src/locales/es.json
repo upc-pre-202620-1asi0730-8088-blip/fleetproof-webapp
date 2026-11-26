@@ -1,11 +1,11 @@
 {
-  "paymentUi": {"demo":"Pago simulado", "notice":"No se cobrará dinero ni se solicitan datos bancarios.", "showQr":"Mostrar QR", "qrAlt":"QR de demostración, no válido para pagos", "notPayment":"QR ficticio · No realizar transferencias", "confirm":"Confirmar pago", "continue":"Continuar al pago simulado", "individual":"Pago de reporte individual", "platePayment":"Una consulta para la placa {plate}. Cada nuevo reporte individual requiere su propia confirmación de pago simulada.", "subscription":"Suscripción de flota", "plan":"Plan de consultas", "weekly":"Semanal", "monthly":"Mensual", "planPayment":"Plan {plan}: consultas periódicas para los vehículos de tu flota. Confirmación de demostración, sin cobros reales.", "activated":"Pago simulado confirmado. Plan activado."},
-  "planUi": {"demo":"Cuotas de demostración por cuenta: 50 vehículos, 100 reportes y 25 monitoreos activos."},
+  "paymentUi": {"annual":"Anual", "taypiDemo":"Taypi · Simulación", "notice":"No se cobrará dinero ni se solicitan datos bancarios.", "showQr":"Mostrar QR", "qrAlt":"QR de demostración, no válido para pagos", "confirm":"Confirmar pago", "continue":"Continuar al pago", "individual":"Pago de reporte individual", "platePayment":"Una consulta para la placa {plate}. Cada reporte se solicita por separado.", "subscription":"Suscripción de flota", "plan":"Plan de consultas", "weekly":"Semanal", "monthly":"Mensual", "planPayment":"Plan {plan} para los vehículos de tu flota.", "activated":"Plan activado."},
+  "planUi": {"audience":"Tipo de cliente","personal":"Particular","business":"Empresa","choose":"Elegir plan","usage":"Consumo de la cuenta","period":{"weekly":"por semana","monthly":"por mes","annual":"por año"},"summary":"{audience} · Plan {plan} · {price}"},
   "monitoringUi": {"pause":"Pausar"},
   "importUi": {"button":"Importar CSV", "summary":"Aceptados: {accepted}. Rechazados: {rejected}."},
   "comparisonUi": {"unchanged":"Sin cambios"},
-  "profile": {"title":"Mi perfil", "details":"Datos de acceso", "current":"Contraseña actual", "newPassword":"Nueva contraseña (opcional, mínimo 8 caracteres)", "security":"Seguridad", "passwordNotice":"Al cambiar la contraseña se cerrarán todas las sesiones de esta cuenta.", "delete":"Eliminar cuenta", "deleteNotice":"Elimina tu cuenta y todos tus vehículos, reportes, flotas y evidencias. Ingresa tu contraseña actual para continuar.", "confirm":"Esta acción es irreversible. Se eliminarán la cuenta y todos sus datos. ¿Confirmas la eliminación?", "denied":"Verifica tu contraseña actual. La cuenta de demostración tiene restricciones.", "adminNotice":"El nombre etepepe está reservado. La cuenta admin de demostración no puede eliminarse."},
-  "workspaceUi": {"vehicles":"Vehículos", "download":"Descargar PDF", "sources":"Fuentes consultadas", "demo":"Reporte de demostración · Datos ficticios", "sourceVehicle":"Consulta Vehicular", "sourceSoat":"SOAT", "sourceAccidents":"SBS Accidentes", "quick":"Acciones rápidas", "published":"Publicado", "publish":"Publicar reporte", "reject":"Solicitar corrección", "compare":"Comparar versiones", "noVersion":"No existe una versión anterior para comparar."},
+  "profile": {"title":"Mi perfil", "details":"Datos de acceso", "current":"Contraseña actual", "newPassword":"Nueva contraseña (opcional, mínimo 8 caracteres)", "security":"Seguridad", "passwordNotice":"Al cambiar la contraseña se cerrarán todas las sesiones de esta cuenta.", "delete":"Eliminar cuenta", "deleteNotice":"Elimina tu cuenta y todos tus vehículos, reportes, flotas y evidencias. Ingresa tu contraseña actual para continuar.", "confirm":"Esta acción es irreversible. Se eliminarán la cuenta y todos sus datos. ¿Confirmas la eliminación?", "denied":"Verifica tu contraseña actual. Revisa los permisos de tu cuenta.", "adminNotice":"La cuenta administradora no puede eliminarse."},
+  "workspaceUi": {"vehicles":"Vehículos", "download":"Descargar PDF", "sources":"Fuentes consultadas", "sourceVehicle":"Consulta Vehicular", "sourceSoat":"SOAT", "sourceAccidents":"SBS Accidentes", "quick":"Acciones rápidas", "published":"Publicado", "publish":"Publicar reporte", "reject":"Solicitar corrección", "compare":"Comparar versiones", "noVersion":"No existe una versión anterior para comparar."},
   "auth": {
     "signIn": "Iniciar sesión",
     "signUp": "Crear cuenta",
@@ -13,8 +13,7 @@
     "username": "Usuario",
     "password": "Contraseña",
     "invalid": "Usuario o contraseña incorrectos.",
-    "duplicate": "El usuario ya está registrado.",
-    "testOnly": "Utiliza únicamente credenciales ficticias en este entorno de prueba."
+    "duplicate": "El usuario ya está registrado."
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -41,7 +40,6 @@
     "saved": "Cambios guardados",
     "error": "No se pudo guardar. Revisa la conexión e inténtalo nuevamente.",
     "required": "Completa los campos obligatorios.",
-    "simulated": "Entorno de prueba · Datos simulados",
     "language": "Idioma",
     "menu": "Abrir navegación"
   },
@@ -59,6 +57,8 @@
     "resolved": "Resuelto"
   },
   "dashboard": {
+    "recentReports": "Reportes recientes",
+    "reportHistory": "Ver historial",
     "title": "Panel de control",
     "subtitle": "Estado de la flota y seguimiento de observaciones",
     "total": "Total vehículos",
@@ -140,7 +140,6 @@
     "active": "Activo",
     "completed": "Completado",
     "failed": "Fallido",
-    "paymentNotice": "Validación de pago simulada. No se procesa dinero ni se integra Taypi.",
     "paySuccess": "Simular pago válido",
     "payFailure": "Simular pago fallido",
     "subscriptionRequired": "Se requiere una suscripción activa para este servicio.",
@@ -151,7 +150,7 @@
     "alreadyAssigned": "El vehículo ya tiene una asignación de flota.",
     "alreadyMonitored": "El vehículo ya tiene monitoreo activo.",
     "checkNow": "Revisar ahora",
-    "monitoringNotice": "Revisiones de datos locales mientras esta vista permanece abierta. Sin worker en servidor ni consultas oficiales.",
+    "monitoringNotice": "Las comprobaciones se ejecutan mientras esta vista permanece abierta.",
     "interval": "Intervalo (minutos)",
     "activate": "Activar monitoreo",
     "lastCheck": "Última revisión",

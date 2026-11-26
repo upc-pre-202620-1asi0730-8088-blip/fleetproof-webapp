@@ -5,22 +5,41 @@ import { useVehicleStore } from '../../../vehicle-information/application/vehicl
 import { useResolutionStore } from '../../../fleet-management/application/resolution.store.js';
 import RiskTag from '../components/risk-tag.vue';
 import { useMonitoringStore } from '../../../vehicle-monitoring/application/monitoring.store.js';
-const { t } = useI18n();
+import { useReportingStore } from '../../../report-management/application/reporting.store.js';
+const { t, locale } = useI18n();
 const fleet = useVehicleStore();
 const resolution = useResolutionStore();
 const monitoring = useMonitoringStore();
+const reporting = useReportingStore();
+const recentReports = computed(() => [...reporting.reports].sort((a, b) =>
+  (Date.parse(b.requestedAt) || 0) - (Date.parse(a.requestedAt) || 0) || String(b.id).localeCompare(String(a.id))
+));
+function formatReportDate(value) {
+  return Number.isFinite(Date.parse(value)) ? new Date(value).toLocaleDateString(locale.value) : '—';
+}
 const stats = computed(() => [
   { label: 'total', value: fleet.vehicles.length, icon: 'pi-car' },
   { label: 'critical', value: fleet.criticalCount, icon: 'pi-exclamation-triangle' },
   { label: 'monitored', value: monitoring.monitorings.filter(m => m.status === 'active').length, icon: 'pi-eye' },
   { label: 'open', value: resolution.openCount, icon: 'pi-briefcase' }
 ]);
-onMounted(() => { fleet.fetchVehicles(); resolution.fetchCases(); monitoring.fetchMonitoring(); });
+onMounted(() => { fleet.fetchVehicles(); resolution.fetchCases(); monitoring.fetchMonitoring(); reporting.fetchReports(); });
 </script>
 <template>
   <div class="page-heading"><div><h1>{{ t('dashboard.title') }}</h1><p>{{ t('dashboard.subtitle') }}</p></div><router-link class="p-button" to="/app/vehicles"><i class="pi pi-car"></i>{{ t('dashboard.goFleet') }}</router-link></div>
   <pv-message v-if="fleet.error || resolution.error" severity="error">{{ t(fleet.error || resolution.error) }} <pv-button :label="t('common.retry')" text @click="fleet.fetchVehicles(); resolution.fetchCases()" /></pv-message>
   <div class="metrics"><article v-for="stat in stats" :key="stat.label" class="metric"><span>{{ t('dashboard.' + stat.label) }}</span><strong>{{ stat.value }}</strong><i :class="'pi ' + stat.icon" aria-hidden="true"></i></article></div>
+  <section class="data-panel" aria-labelledby="dashboard-reports-title">
+    <div class="panel-heading"><h2 id="dashboard-reports-title">{{ t('dashboard.recentReports') }}</h2><router-link to="/app/reports">{{ t('dashboard.reportHistory') }}</router-link></div>
+    <pv-message v-if="reporting.error" severity="error">{{ t(reporting.error) }} <pv-button text :label="t('common.retry')" @click="reporting.fetchReports()" /></pv-message>
+    <pv-data-table :value="recentReports" :loading="reporting.loading" data-key="id" paginator :rows="10" :page-link-size="3" paginator-template="PrevPageLink PageLinks NextPageLink">
+      <template #empty>{{ t('common.empty') }}</template>
+      <pv-column :header="t('vehicle.plate')"><template #body="{ data }"><router-link :to="'/app/reports/' + data.id">{{ data.plate }}</router-link></template></pv-column>
+      <pv-column :header="t('report.vehicle')"><template #body="{ data }">{{ [data.make, data.model].filter(Boolean).join(' ') || '—' }}</template></pv-column>
+      <pv-column :header="t('report.date')"><template #body="{ data }">{{ formatReportDate(data.requestedAt) }}</template></pv-column>
+      <pv-column :header="t('report.status')"><template #body="{ data }"><pv-tag :value="t('status.' + data.status)" :severity="data.status === 'published' ? 'success' : 'info'" /></template></pv-column>
+    </pv-data-table>
+  </section>
   <div class="dashboard-grid">
     <section class="data-panel"><div class="panel-heading"><h2>{{ t('dashboard.fleet') }}</h2></div>
       <pv-data-table :value="fleet.vehicles.slice(0, 6)" :loading="fleet.loading" data-key="id">
