@@ -1,10 +1,25 @@
 # Despliegue Académico: Aplicaciones Web
 
+## AV2: configuración vigente
+
+- Organización: https://github.com/upc-pre-202620-1asi0730-8088-blip.
+- Repositorio del frontend: https://github.com/upc-pre-202620-1asi0730-8088-blip/fleetproof-webapp, rama de producción `main`.
+- Frontend: https://zesty-sorbet-f6d433.netlify.app.
+- Backend real: https://fleetproof-platform.onrender.com/api/v1, publicado con Docker y PostgreSQL.
+- Variables de build: `VITE_FLEETPROOF_API_URL=https://fleetproof-platform.onrender.com/api/v1` y `VITE_AUTH_MODE=real`.
+- Landing: https://upc-pre-202620-1asi0730-8088-blip.github.io/fleetproof-website/.
+
+El renombrado de la organización no cambia los dominios de Netlify o Render. Las variables existentes se conservan; las credenciales permanecen fuera de Git.
+
+## TB1: configuración histórica con Fake API
+
+La sección siguiente conserva la configuración del Sprint 2 y no debe utilizarse para sustituir la API real de AV2.
+
 Esta configuración publica una demostración con JSON Server, no un backend seguro. Solo deben utilizarse datos y contraseñas ficticios. Los datos del mock son compartidos y sus endpoints públicos permiten modificarlos. No introducir información de entrevistas ni vehículos reales.
 
 ## Render: Fake RESTful API
 
-La API simulada vive en el repositorio separado `fleetproof-mock-platform` de la organización upc-pre-202620-asi0730-8088-blip, rama `feature/sprint2-mock-api`. Servicio publicado: https://fleetproof-mock-platform.onrender.com.
+La API simulada vive en el repositorio separado `fleetproof-mock-platform` de la organización upc-pre-202620-1asi0730-8088-blip, rama `feature/sprint2-mock-api`. Servicio publicado: https://fleetproof-mock-platform.onrender.com.
 
 Crear un Web Service manualmente, con el plan Free, desde ese repositorio y rama.
 
